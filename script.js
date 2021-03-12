@@ -8,7 +8,7 @@
 //useful tutorial.
 //https://www.youtube.com/watch?v=MWD-iKzR2c8&list=PLUp2SeJP6HNB4UmTFyAbvmiVmfi0tpWlH&index=6
 
-let inputArray = [1,2,4,591,392,391,2,5,10,2,1,1,1,20,20];
+let inputArray = [1,2,'4',391,'2',5,10,20,'1',2,1,'1',0,10,1,'20','20'];
 let cloneOriginalArray = inputArray;
 
 function organizeArray(arr)
@@ -93,8 +93,6 @@ function groupSimilarValues(arr,refP,currentStateOfFinalArray)
        
 }
 
-
-
 function removeUndefinedFromArray(arrayWithUndefineds)
 {
     let filtered = arrayWithUndefineds.filter(function (el) {
@@ -104,8 +102,56 @@ function removeUndefinedFromArray(arrayWithUndefineds)
       return filtered;
 }
 
-let sortedArray =  organizeArray(inputArray);
-console.log(sortedArray);
+function seperateStrings(arr)
+{
+    let onlyS = arr.filter(e =>
+    {
+      return  typeof e === 'string'
+    });
 
-let groupedArray = groupSimilarValues(sortedArray,0,[]);
-console.log(groupedArray);
+    return onlyS;
+}
+
+
+function seperateInts(arr)
+{
+    let onlyI = arr.filter(num =>
+    {
+        if (Number.isInteger(num) && num >0){
+            return num;}
+    });
+
+    return onlyI;
+}
+
+
+function arrangeMixedStringsIntsArray(inputA)
+{
+    let onlyStrings = seperateStrings(inputA);
+    console.log(onlyStrings);
+
+    let onlyInts = seperateInts(inputArray);
+    console.log(onlyInts);
+
+    let sortedStringsArray =  organizeArray(onlyStrings);
+    console.log(sortedStringsArray);
+
+    let sortedIntsArray = organizeArray(onlyInts);
+    console.log(sortedIntsArray);
+
+    let groupedStringsArray = groupSimilarValues(sortedStringsArray,0,[]);//groupSimilarValues(arr,refP,currentStateOfFinalArray)
+    console.log(groupedStringsArray);
+
+    let groupedIntsArray = groupSimilarValues(sortedIntsArray, 0, []);
+    console.log(groupedIntsArray);
+
+    let finalMixedArray = [];
+    finalMixedArray = finalMixedArray.concat(groupedIntsArray, groupedStringsArray);
+    console.log(finalMixedArray);
+
+    return finalMixedArray;
+}
+
+
+let finalAnswer = arrangeMixedStringsIntsArray(inputArray);
+console.log(finalAnswer);
